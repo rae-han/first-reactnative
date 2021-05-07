@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { StatusBar, useWindowDimensions } from 'react-native'
 import styled, { ThemeProvider } from 'styled-components/native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { AppLoading } from 'expo'
 import { theme } from './theme'
-import { images } from './images';
 
 import Input from './components/Input'
 import IconButton from './components/IconButton'
@@ -54,6 +55,20 @@ const App = () => {
 
   const width = useWindowDimensions().width;
 
+  const saveTasks = async tasks => {
+    try {
+      await AsyncStorage.setItem('tasks', JSON.stringify(tasks));
+      setTasks(tasks)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const loadTasks = async () => {
+    const loadedTasks = await AsyncStorage.getItem('tasks');
+    setTasks(JSON.parse(loadedTasks || '{}'))
+  }
+
   const addTask = () => {
     const ID = Date.now().toString();
     const newTaskObject = {
@@ -64,26 +79,30 @@ const App = () => {
       },
     }
     setNewTask('');
-    setTasks({ ...tasks, ...newTaskObject });
+    // setTasks({ ...tasks, ...newTaskObject });
+    saveTasks({ ...tasks, ...newTaskObject });
   }
 
 const deleteTask = id => {
   const currentTasks = Object.assign({}, tasks);
   delete currentTasks[id];
-  setTasks(currentTasks);
+  // setTasks(currentTasks);
+  saveTasks(currentTasks);
 }
 
 const toggleTask = id => {
   console.log(id)
   const currentTasks = Object.assign({}, tasks);
   currentTasks[id]['completed'] = !currentTasks[id]['completed'];
-  setTasks(currentTasks)
+  // setTasks(currentTasks)
+  saveTasks(currentTasks)
 }
 
 const updateTask = item => {
   const currentTasks = Object.assign({}, tasks);
   currentTasks[item.id] = item;
-  setTasks(currentTasks);
+  // setTasks(currentTasks);
+  saveTasks(currentTasks);
 };
 
   const handleTextChange = text => {
