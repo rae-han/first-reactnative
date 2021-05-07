@@ -8,20 +8,24 @@ import Input from './components/Input'
 import IconButton from './components/IconButton'
 import Task from './components/Task'
 
-const createBulkTask = () => {
+const createBulkTask = limit => {
   let obj = {};
-  for(let i=0; i<3; i++) {
+  for(let i=0; i<limit; i++) {
     obj = {
       ...obj,
       [`${i}`]: {
         id: `${i}`,
         text: `text${i}`,
-        complete: i%2 === 0 ? true : false
+        completed: i%2 === 0 ? true : false
       }
     }
   }
 
   return obj;
+}
+
+const currentObject = obj => {
+  return Object.assign({}, obj)
 }
 
 const Container = styled.SafeAreaView`
@@ -46,8 +50,7 @@ const List = styled.ScrollView`
 
 const App = () => {
   const [newTask, setNewTask] = useState('');
-  const [tasks, setTasks] = useState(createBulkTask);
-  console.log(Object.values(tasks))
+  const [tasks, setTasks] = useState(createBulkTask(12));
 
   const width = useWindowDimensions().width;
 
@@ -64,15 +67,31 @@ const App = () => {
     setTasks({ ...tasks, ...newTaskObject });
   }
 
-  const deleteTask = id => {
-    console.log(id)
-    const currentTasks = Object.assign({}, tasks);
-    // delete currentTasks[id];
-    setTasks(currentTasks);
+const deleteTask = id => {
+  const currentTasks = Object.assign({}, tasks);
+  delete currentTasks[id];
+  setTasks(currentTasks);
+}
+
+const toggleTask = id => {
+  console.log(id)
+  const currentTasks = Object.assign({}, tasks);
+  currentTasks[id]['completed'] = !currentTasks[id]['completed'];
+  setTasks(currentTasks)
+}
+
+const updateTask = item => {
+  const currentTasks = Object.assign({}, tasks);
+  currentTasks[item.id] = item;
+  setTasks(currentTasks);
+};
+
+  const handleTextChange = text => {
+    setNewTask(text)
   }
 
-  const _handleTextChange = text => {
-    setNewTask(text)
+  const onBlur = () => {
+    setNewTask('');
   }
 
   return (
@@ -86,12 +105,22 @@ const App = () => {
         <Input 
           placeholder="+ Add a Task" 
           value={newTask}
-          onChangeText={_handleTextChange}
+          onChangeText={handleTextChange}
           onSubmitEditing={addTask}
-          deleteTask={deleteTask}
+          onBlur={onBlur}
         />
         <List width={width}>
-          {Object.values(tasks).reverse().map(item => <Task key={item.id} item={item} deleteTask={deleteTask} />)}
+        {Object.values(tasks)
+            .reverse()
+            .map(item => (
+              <Task
+                key={item.id}
+                item={item}
+                deleteTask={deleteTask}
+                toggleTask={toggleTask}
+                updateTask={updateTask}
+              />
+            ))}
         </List>
       </Container>
     </ThemeProvider>
