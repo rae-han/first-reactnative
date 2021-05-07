@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { StatusBar, useWindowDimensions } from 'react-native'
-import styled, { ThemeProvider } from 'styled-components/native'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { AppLoading } from 'expo'
-import { theme } from './theme'
+import { StatusBar, useWindowDimensions } from 'react-native';
+import styled, { ThemeProvider } from 'styled-components/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import AppLoading from 'expo-app-loading';
+import { theme } from './theme';
 
 import Input from './components/Input'
-import IconButton from './components/IconButton'
 import Task from './components/Task'
 
 const createBulkTask = limit => {
@@ -50,23 +49,24 @@ const List = styled.ScrollView`
 `
 
 const App = () => {
+  const width = useWindowDimensions().width;
+
+  const [isReady, setIsReady] = useState(false)
   const [newTask, setNewTask] = useState('');
   const [tasks, setTasks] = useState(createBulkTask(12));
-
-  const width = useWindowDimensions().width;
 
   const saveTasks = async tasks => {
     try {
       await AsyncStorage.setItem('tasks', JSON.stringify(tasks));
-      setTasks(tasks)
+      setTasks(tasks);
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   }
 
   const loadTasks = async () => {
     const loadedTasks = await AsyncStorage.getItem('tasks');
-    setTasks(JSON.parse(loadedTasks || '{}'))
+    setTasks(JSON.parse(loadedTasks || '{}'));
   }
 
   const addTask = () => {
@@ -113,6 +113,16 @@ const updateTask = item => {
     setNewTask('');
   }
 
+  if(!isReady) {
+    return (
+      <AppLoading 
+        startAsync={loadTasks}
+        onFinish={() => setIsReady(true)}
+        onError={console.error}
+      />
+    )
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <Container>
@@ -143,7 +153,7 @@ const updateTask = item => {
         </List>
       </Container>
     </ThemeProvider>
-  );
+  )
 };
 
 export default App;
