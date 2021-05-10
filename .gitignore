@@ -3,9 +3,9 @@ my-first-react-native-main.zip
 sourcecode
 ./sourcecode
 
-*/package.json
-/package.json
-package.json
+# */package.json
+# /package.json
+# package.json
 */package-lock.json
 /package-lock.json
 package-lock.json
