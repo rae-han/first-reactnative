@@ -7,6 +7,10 @@ import Dog from './components/Dog';
 import From from './components/Form'
 import Length from './components/Length';
 
+const Layout = styled.ScrollView`
+  flex: 1;
+`
+
 const Container = styled.View`
   flex: 1;
   background-color: #fff;
@@ -17,18 +21,20 @@ const Container = styled.View`
 const App = () => {
   const [isVisibleForm, setIsVisibleForm] = useState(true)
   return (
-    <Container>
-      <Counter />
-      <Button
-        title="Toggle Form Component"
-        onPress={() => {
-          setIsVisibleForm(!isVisibleForm)
-        }}
-      />
-      { isVisibleForm && <From /> }
-      <Length />
-      <Dog />
-    </Container>
+    <Layout>
+      <Container>
+        <Counter />
+        <Button
+          title="Toggle Form Component"
+          onPress={() => {
+            setIsVisibleForm(!isVisibleForm)
+          }}
+        />
+        { isVisibleForm && <From /> }
+        <Length />
+        <Dog />
+      </Container>
+    </Layout>
   );
 };
 
