@@ -26,7 +26,7 @@ const Form = () => {
 
   useEffect(() => {
     console.log('Form Component Mount')
-    refName.current.focus();
+    // refName.current.focus();
 
     return () => {
       console.log('Form Component Unmount')
