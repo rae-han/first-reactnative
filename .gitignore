@@ -2,3 +2,16 @@ my-first-react-native-main.zip
 ./my-first-react-native-main.zip
 sourcecode
 ./sourcecode
+
+*/package.json
+/package.json
+package.json
+*/package-lock.json
+/package-lock.json
+package-lock.json
+
+node_modules
+/node_modules
+*/node_modules
+noe_modules/*
+*/node_modules/*
