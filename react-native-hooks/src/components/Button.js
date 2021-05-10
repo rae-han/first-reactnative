@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native'
 
-const Container = styled.Presable`
+const Container = styled.Pressable`
   background-color: #3498db;
   border-radius: 15px;
   padding: 15px 30px;
@@ -15,10 +15,10 @@ const Title = styled.Text`
   color: white;
 `
 
-const Button = ({ title, onPress }) => {
+const Button = ({ children, title, onPress }) => {
   return (
     <Container onPress={onPress}>
-      <Title>{title}</Title>
+      <Title>{title}{children}</Title>
     </Container>
   );
 };
