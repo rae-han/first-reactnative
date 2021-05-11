@@ -16,5 +16,6 @@ node_modules
 noe_modules/*
 */node_modules/*
 
-*/firebase.json
 firebase.json
+*/firebase.json
+**/firebase.json
