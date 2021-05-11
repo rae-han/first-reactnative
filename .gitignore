@@ -13,11 +13,13 @@ package-lock.json
 node_modules
 /node_modules
 */node_modules
-noe_modules/*
+node_modules/*
 */node_modules/*
 
+# firebase
 firebase.json
+firebase.*
 */firebase.json
 **/firebase.json
-firebase.*
+react-native-*/firebase.json
 
