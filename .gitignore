@@ -19,3 +19,5 @@ noe_modules/*
 firebase.json
 */firebase.json
 **/firebase.json
+firebase.*
+
