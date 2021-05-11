@@ -7,3 +7,7 @@ npm i @react-navigation/stack
 npm i @react-navigation/bottom-tabs
 
 npm i styled-components prop-types
+
+# firebase
+https://console.firebase.google.com/
+https://bit.ly/location-firebase
