@@ -1,9 +1,9 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 // import { TouchableWithoutFeedback, Keyboard } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import styled from 'styled-components/native'
-import { Text, Button } from 'react-native';
-import { Image, Input } from '../components'
+// import { Text, Button } from 'react-native';
+import { Image, Input, Button } from '../components'
 import { images } from '../utils/images'
 import { validateEmail, removeWhitespace } from '../utils/common';
 
@@ -27,6 +27,7 @@ const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [disabled, setDisabled] = useState(true)
 
   const passwordRef = useRef();
 
@@ -41,6 +42,12 @@ const Login = ({ navigation }) => {
   const handlePasswordChange = password => {
     setPassword(removeWhitespace(password))
   }
+
+  const handleLoginButtonPress = () => {};
+
+  useEffect(() => {
+    setDisabled(!(email && password && !errorMessage));
+  }, [email, password, errorMessage])
 
   return (
     <KeyboardAwareScrollView
@@ -64,13 +71,19 @@ const Login = ({ navigation }) => {
           value={password}
           onChangeText={handlePasswordChange}
           // onChangeText={text => setPassword(text)}
-          onSubmitEditing={() => {}}
+          onSubmitEditing={handleLoginButtonPress}
           placeholder="Password"
           returnKeyType="done"
           isPassword
         />
         <ErrorText>{errorMessage}</ErrorText>
-        <Button title="Signup" onPress={() => navigation.navigate('Signup')}></Button>
+        <Button title="Login" onPress={handleLoginButtonPress} />
+        <Button 
+          title="Signup" 
+          onPress={() => navigation.navigate('Signup')}
+          isFilled={false}
+          disalbed={disabled}
+        ></Button>
       </Container>
     </KeyboardAwareScrollView>
   );

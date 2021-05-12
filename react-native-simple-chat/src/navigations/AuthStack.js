@@ -16,7 +16,12 @@ const AuthStack = () => {
         cardStyle: { backgroundColor: theme.backgroundColor },
       }}
     >
-      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen 
+        name="Login" 
+        component={Login}
+        options={{ headerShown: false }}
+      
+      />
       <Stack.Screen name="Signup" component={Signup} />
     </Stack.Navigator>
   );
