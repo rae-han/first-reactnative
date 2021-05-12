@@ -46,24 +46,24 @@ const App = () => {
   //   )
   // }
 
-  // return (
-  //   <ThemeProvider theme={theme}>
-  //     <StatusBar barStyle="dark-content" />
-  //     <Navigation />
-  //   </ThemeProvider>
-  // );
-  return isReady ? (
+  return (
     <ThemeProvider theme={theme}>
       <StatusBar barStyle="dark-content" />
       <Navigation />
     </ThemeProvider>
-  ) : (
-    <AppLoading 
-      startAsync={loadAsset}
-      onFinish={() => setIsReady(true)}
-      onError={console.warn}
-    />
-  )
+  );
+  // return isReady ? (
+  //   <ThemeProvider theme={theme}>
+  //     <StatusBar barStyle="dark-content" />
+  //     <Navigation />
+  //   </ThemeProvider>
+  // ) : (
+  //   <AppLoading 
+  //     startAsync={loadAsset}
+  //     onFinish={() => setIsReady(true)}
+  //     onError={console.warn}
+  //   />
+  // )
 };
 
 export default App;
