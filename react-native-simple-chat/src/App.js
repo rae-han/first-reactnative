@@ -8,6 +8,8 @@ import { theme } from './theme'
 
 import Navigation from './navigations'
 
+import { images } from './utils/images'
+
 const cacheImages = images => {
   return images.map(image => {
     if(typeof image === 'string') {
@@ -25,7 +27,10 @@ const App = () => {
   const [isReady, setIsReady] = useState(false);
 
   const loadAsset = async () => {
-    const imageAssets = cacheImages([require('../assets/splash.png')]);
+    const imageAssets = cacheImages([
+      require('../assets/splash.png'),
+      ...Object.values(images)
+    ]);
     const fontAssets = cacheFonts([]);
 
     await Promise.all([...imageAssets, ...fontAssets]);

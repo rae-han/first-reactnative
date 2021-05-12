@@ -12,7 +12,7 @@ const Container = styled.View`
 const Signup = () => {
   return (
     <Container>
-      <Text style={{ fontSzie: 30 }}>Signup Screen</Text>
+      <Text style={{ fontSize: 30 }}>Signup Screen</Text>
     </Container>
   )
 }

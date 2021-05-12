@@ -8,6 +8,8 @@ npm i @react-navigation/bottom-tabs
 
 npm i styled-components prop-types
 
+npm i react-native-keyboard-aware-scroll-view
+
 # firebase
 https://console.firebase.google.com/
 https://bit.ly/location-firebase

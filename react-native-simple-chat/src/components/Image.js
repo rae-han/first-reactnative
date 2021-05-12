@@ -12,12 +12,17 @@ const StyledImage = styled.Image`
   height: 100px;
 `
 
-const Image = () => {
+const Image = ({ url, imageStyle }) => {
   return (
-    <div>
-      
-    </div>
+    <Container>
+      <StyledImage source={{ uri: url }} style={imageStyle} />
+    </Container>
   );
 };
+
+Image.propTypes = {
+  uri: PropTypes.string,
+  imageStyle: PropTypes.object,
+}
 
 export default Image;
