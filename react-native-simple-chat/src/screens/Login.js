@@ -6,13 +6,16 @@ import styled from 'styled-components/native'
 import { Image, Input, Button } from '../components'
 import { images } from '../utils/images'
 import { validateEmail, removeWhitespace } from '../utils/common';
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 const Container = styled.View`
   flex: 1;
   justify-content: center;
   align-items: center;
   background-color: ${({ theme }) => theme.background};
-  padding: 20px;
+  padding: 0 20px;
+  padding-top: ${({ insets: { top }}) => top}px;
+  padding-bottom: ${({ insets: { bottom }}) => bottom}px;
 `
 const ErrorText = styled.Text`
   align-items: flex-start;
@@ -30,6 +33,7 @@ const Login = ({ navigation }) => {
   const [disabled, setDisabled] = useState(true)
 
   const passwordRef = useRef();
+  const insets = useSafeAreaInsets();
 
   const handleEmailChage = email => {
     const changedEmail = removeWhitespace(email);
@@ -54,7 +58,7 @@ const Login = ({ navigation }) => {
       contentContainerStyle={{ flex: 1 }}
       extraScrollHeight={20}
     >
-      <Container>
+      <Container insets={insets}>
         <Image url={images.logo} imageStyle={{ borderRadius: 8 }}/>
         <Input 
           label="Email"

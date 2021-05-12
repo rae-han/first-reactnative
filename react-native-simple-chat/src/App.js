@@ -36,33 +36,34 @@ const App = () => {
     await Promise.all([...imageAssets, ...fontAssets]);
   }
 
-  if(!isReady) {
-    return (
-      <AppLoading 
-        startAsync={loadAsset}
-        onFinish={() => setIsReady(true)}
-        onError={console.warn}
-      />
-    )
-  }
+  // if(!isReady) {
+  //   return (
+  //     <AppLoading 
+  //       startAsync={loadAsset}
+  //       onFinish={() => setIsReady(true)}
+  //       onError={console.warn}
+  //     />
+  //   )
+  // }
 
-  return (
+  // return (
+  //   <ThemeProvider theme={theme}>
+  //     <StatusBar barStyle="dark-content" />
+  //     <Navigation />
+  //   </ThemeProvider>
+  // );
+  return isReady ? (
     <ThemeProvider theme={theme}>
       <StatusBar barStyle="dark-content" />
       <Navigation />
     </ThemeProvider>
-  );
-  // return isReady ? (
-  //   <ThemeProvider theme={theme}>
-  //     <StatusBar barStyle="dark-content" />
-  //   </ThemeProvider>
-  // ) : (
-  //   <AppLoading 
-  //     startAsync={loadAsset}
-  //     onFinish={() => setIsReady(true)}
-  //     onError={console.warn}
-  //   />
-  // )
+  ) : (
+    <AppLoading 
+      startAsync={loadAsset}
+      onFinish={() => setIsReady(true)}
+      onError={console.warn}
+    />
+  )
 };
 
 export default App;
