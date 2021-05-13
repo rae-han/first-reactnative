@@ -7,6 +7,7 @@ import { ThemeProvider } from 'styled-components/native';
 import { theme } from './theme'
 
 import Navigation from './navigations'
+import { ProgressProvider, UserProvider } from './contexts'
 
 import { images } from './utils/images'
 
@@ -48,8 +49,12 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <StatusBar barStyle="dark-content" />
-      <Navigation />
+      <UserProvider>
+        <ProgressProvider>
+          <StatusBar barStyle="dark-content" />
+          <Navigation />
+        </ProgressProvider>
+      </UserProvider>
     </ThemeProvider>
   );
   // return isReady ? (

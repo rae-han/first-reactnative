@@ -1,14 +1,16 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 // import { TouchableWithoutFeedback, Keyboard } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import styled from 'styled-components/native'
-// import { Text, Button } from 'react-native';
+import { Alert } from 'react-native';
 import { Image, Input, Button } from '../components'
 import { images } from '../utils/images'
 import { validateEmail, removeWhitespace } from '../utils/common';
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { ProgressContext, UserContext } from '../contexts'
 
-import { login } from '../api/auth'
+// import { login } from '../api/auth'
+import { login } from '../utils/firebase'
 
 const Container = styled.View`
   flex: 1;
@@ -28,11 +30,15 @@ const ErrorText = styled.Text`
   color: ${({ theme }) => theme.errorText};
 `
 
+// # =>
 const Login = ({ navigation }) => {
+  const { dispatch } = useContext(UserContext)
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [disabled, setDisabled] = useState(true)
+  const { spinner } = useContext(ProgressContext);
 
   const passwordRef = useRef();
   const insets = useSafeAreaInsets();
@@ -49,20 +55,33 @@ const Login = ({ navigation }) => {
     setPassword(removeWhitespace(password))
   }
 
-  const handleLoginButtonPress = () => {};
+  const handleLoginButtonPress = async () => {
+    // let user = await login({
+    //   username: email,
+    //   password: password
+    // })
+
+    // if(user.status === 200) {
+    //   Alert.alert('Login Success', user.data.username)
+    // } else {
+    //   Alert.alert('Login Failure', user.response.data)
+    // }
+    try {
+      spinner.start();
+      const user = await login({ email, password });
+      dispatch(user)
+      // Alert.alert('Login Success', user.email);
+    } catch (error) {
+      Alert.alert('Login Error', error.message)
+    } finally {
+      spinner.stop();
+    }
+  };
 
   useEffect(() => {
     setDisabled(!(email && password && !errorMessage));
   }, [email, password, errorMessage])
 
-  useEffect(() => {
-    let result = (async () => {
-      let result = await login();
-      return result;
-    })();
-
-    console.log(result)
-  }, []);
 
   return (
     <KeyboardAwareScrollView
@@ -92,12 +111,15 @@ const Login = ({ navigation }) => {
           isPassword
         />
         <ErrorText>{errorMessage}</ErrorText>
-        <Button title="Login" onPress={handleLoginButtonPress} />
+        <Button 
+          title="Login" 
+          onPress={handleLoginButtonPress} 
+          // disabled={disabled}
+        />
         <Button 
           title="Signup" 
           onPress={() => navigation.navigate('Signup')}
           isFilled={false}
-          disalbed={disabled}
         ></Button>
       </Container>
     </KeyboardAwareScrollView>

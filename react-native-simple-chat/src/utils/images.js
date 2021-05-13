@@ -4,5 +4,5 @@ const profile = require('../../assets/profile-img.png')
 
 export const images = {
   logo: `${prefix}/logo.png?alt=media`,
-  photo: profile
+  photo: `${prefix}/photo.png?alt=media`
 }
