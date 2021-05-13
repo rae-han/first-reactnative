@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Platform, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 // import * as Permissions from 'expo-permissions';
@@ -42,14 +42,56 @@ const PhotoButton = ({ onPress }) => {
   )
 }
 
-const Image = ({ url = undefined, source, imageStyle, rounded = false, showButton = false }) => {
+const Image = ({ url = undefined, imageStyle, rounded = false, showButton = false, onChangeImage }) => {
+  useEffect(() => {
+    (async () => {
+      try {
+        if (Platform.OS !== 'web') {
+          const { 
+            status 
+          } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+          if (status !== 'granted') {
+            Alert.alert(
+              'Photo Permission',
+              'Please turn on the camera roll permissions.'
+            )
+          }
+        }
+      } catch (error) {
+        Alert.alert('Photo Permission Error', error.message)
+      }
+    })();
+  }, []);
+
+  const handleEditButton = async () => {
+    try {
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 1,
+      });
+
+      if(!result.cancelled) {
+        onChangeImage(result.uri)
+      }
+    } catch (error) {
+      Alert.alert('Photo Error', e.message);
+    }
+  }
+
   return (
     <Container>
-      <StyledImage source={ url ? { uri: url } : source } style={imageStyle} rounded={rounded} />
-      {showButton && <PhotoButton />}
+      <StyledImage source={ typeof url === 'string' ? { uri: url } : url } style={imageStyle} rounded={rounded} />
+      {showButton && <PhotoButton onPress={handleEditButton} />}
     </Container>
   );
 };
+
+Image.defaultProps = {
+  onChangeImage: () => {}
+}
 
 Image.propTypes = {
   uri: PropTypes.string,

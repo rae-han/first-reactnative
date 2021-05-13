@@ -71,7 +71,12 @@ const Signup = () => {
       extraScrollHeight={20}
     >
       <Container>
-        <Image rounded source={photoUrl} showButton />
+        <Image 
+          rounded 
+          url={photoUrl} 
+          showButton
+          onChangeImage={url => setPhotoUrl(url)}
+        />
         <Input
           label="Name"
           value={name}

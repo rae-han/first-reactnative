@@ -8,6 +8,8 @@ import { images } from '../utils/images'
 import { validateEmail, removeWhitespace } from '../utils/common';
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
+import { login } from '../api/auth'
+
 const Container = styled.View`
   flex: 1;
   justify-content: center;
@@ -52,6 +54,15 @@ const Login = ({ navigation }) => {
   useEffect(() => {
     setDisabled(!(email && password && !errorMessage));
   }, [email, password, errorMessage])
+
+  useEffect(() => {
+    let result = (async () => {
+      let result = await login();
+      return result;
+    })();
+
+    console.log(result)
+  }, []);
 
   return (
     <KeyboardAwareScrollView
