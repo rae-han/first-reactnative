@@ -98,6 +98,7 @@ const Login = ({ navigation }) => {
           onSubmitEditing={() => passwordRef.current.focus()}
           placeholder="Email"
           returnKeyType="next"
+          keyboardType="email-address"
         />
         <Input 
           ref={passwordRef}

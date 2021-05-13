@@ -53,9 +53,15 @@ const Profile = () => {
         showButton
         rounded
       />
+      <Input label="Name" value={user.name} disabled />
+      <Input label="Email" value={user.email} disabled />
       <Button 
         title="logout"
         onPress={handleLogoutButtonPress}
+        containerStyle={{
+          marginTop: 30,
+          backgroundColor: theme.buttonLogout,
+        }}
       />
     </Container>
   );

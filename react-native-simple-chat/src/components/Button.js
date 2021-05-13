@@ -22,7 +22,7 @@ const Title = styled.Text`
 const Button = ({ containerStyle, title, onPress, isFilled = true, disabled }) => {
   return (
     <Container 
-      stlye={containerStyle} 
+      style={containerStyle} 
       onPress={onPress} 
       isFilled={isFilled}
       disabled={disabled}

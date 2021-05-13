@@ -12,27 +12,33 @@ export const theme = {
   text: colors.black,
   imageBackground: colors.grey_0,
   label: colors.grey_1,
+  
   inputPlaceholder: colors.grey_1,
   inputBorder: colors.grey_1,
+  inputDisabledBackground: colors.grey_0,
+
   errorText: colors.red,
+  
   buttonBackground: colors.blue,
   buttonTitle: colors.white,
   buttonUnfilledTitle: colors.blue,
+  buttonLogout: colors.red,
+  
   headerTintColor: colors.black,
   imageButtonBackground: colors.grey_1,
   imageButtonIcon: colors.white,
 
-    // Spinner
-    spinnerBackground: colors.black,
-    spinnerIndicator: colors.white,
-  
-    // List
-    listBorder: colors.grey_0,
-    listTime: colors.grey_1,
-    listDescription: colors.grey_1,
-    listIcon: colors.black,
-  
-    // GiftedChat
-    sendButtonActivate: colors.blue,
-    sendButtonInactivate: colors.grey_1,
+  // Spinner
+  spinnerBackground: colors.black,
+  spinnerIndicator: colors.white,
+
+  // List
+  listBorder: colors.grey_0,
+  listTime: colors.grey_1,
+  listDescription: colors.grey_1,
+  listIcon: colors.black,
+
+  // GiftedChat
+  sendButtonActivate: colors.blue,
+  sendButtonInactivate: colors.grey_1,
 }
