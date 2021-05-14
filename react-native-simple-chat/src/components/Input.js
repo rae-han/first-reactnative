@@ -35,7 +35,6 @@ const Input = forwardRef(({
   returnKeyType,
   maxLength,
   disabled,
-  keyboardType = null
 }, ref) => {
   const [isFocused, setIsFocused] = useState(false);
 
@@ -62,7 +61,6 @@ const Input = forwardRef(({
         textContentType="none"
         underlineColorAndroid="transparent"
         editable={!disabled}
-        keyboardType={keyboardType}
       />
     </Container>
   );

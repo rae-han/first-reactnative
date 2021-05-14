@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { FlatList, Text, Button } from 'react-native'
+import moment from 'moment';
 import styled, { ThemeContext } from 'styled-components/native';
 import { MaterialIcons } from '@expo/vector-icons'
 import { DB } from '../utils/firebase'
@@ -33,15 +34,11 @@ const ItemTime = styled.Text`
   color: ${({ theme }) => theme.listTime};
 `;
 
-const channels = [];
-for(let idx=0; idx<1000; idx++) {
-  channels.push({
-    id: idx,
-    title: `title ${idx}`,
-    description: `desc ${idx}`,
-    createAt: idx,
-  });
-}
+const getDateOrTime = ts => {
+  const now = moment().startOf('day');
+  const target = moment(ts).startOf('day');
+  return moment(ts).format(now.diff(target, 'days') > 0 ? 'MM/DD HH:mm' : 'HH:mm');
+};
 
 const Item = React.memo(({ item: { id, title, description, createAt }, onPress}) => {
   const theme = useContext(ThemeContext);
@@ -55,7 +52,7 @@ const Item = React.memo(({ item: { id, title, description, createAt }, onPress})
         <ItemTitle>{title}</ItemTitle>
         <ItemDescription>{description}</ItemDescription>
       </ItemTextContainer>
-      <ItemTime>{createAt}</ItemTime>
+      <ItemTime>{getDateOrTime(createAt)}</ItemTime>
       <MaterialIcons 
         name="keyboard-arrow-right"
         size={24}
@@ -76,7 +73,6 @@ const ChannelList = ({ navigation }) => {
         snapshot.forEach(doc => {
           list.push(doc.data());
         })
-        console.log(list)
         setChannels(list)
       })
 
